@@ -1,0 +1,11 @@
+.idea/
+.cache/
+*.pyc
+**/__pycache__
+migrations/*
+**/migrations/*
+!__init__.py
+*.log
+.DS_Store
+
+/orm_python脚本里调用djangoModels.py
