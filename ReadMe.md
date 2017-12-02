@@ -12,15 +12,16 @@ django(1.10.6)
 
 管理员：
 用户：admin
-密码：miliops.abc
-
-普通用户：
-用户：myuser
-密码：miliops.abc
-
+密码：adminadmin
 
 ## 工作原理
 Nginx控制源站上下线、挂载维护页面广告，主要调用了dynamic_upstream提供的API接口，[dynamic_upstream](https://github.com/cubicdaiya/ngx_dynamic_upstream "Title")
+
+![image](https://github.com/cucker0/file_store/blob/master/MiliOPS/01.png)
+![image](https://github.com/cucker0/file_store/blob/master/MiliOPS/02.png)
+![image](https://github.com/cucker0/file_store/blob/master/MiliOPS/03.png)
+![image](https://github.com/cucker0/file_store/blob/master/MiliOPS/04.png)
+
 
 ## Nginx编译安装
 
