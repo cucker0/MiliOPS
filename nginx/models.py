@@ -12,6 +12,11 @@ maintain_status_choices = (
     (1, '维护中')
 )
 
+site_status_choices = (
+    (0, '暂停'),
+    (1, '开启')
+)
+
 site_realserver_status_choices = (
     (0, '有源站下线'),
     (1, '全部源站在线'),
@@ -42,6 +47,7 @@ class Site(models.Model):
     maintain_status = models.IntegerField('维护状态', default=0, choices=maintain_status_choices, help_text='0:运行中  1:维护中  初始值为0')
     maintain_page_group = models.ForeignKey('MaintainGroup', verbose_name='维护页面组', null=True, blank=True)
     site_realserver_status = models.SmallIntegerField('站点对应的源站聚合状态', choices=site_realserver_status_choices, default=1, help_text='0:有源站下线  1:全部源站在线  2:状态未知')
+    site_status = models.IntegerField('站点状态', default=1, choices=site_status_choices, help_text='0:暂停  1:开启  初始值为1')
     def __str__(self):
         return self.site_name
 

@@ -5,7 +5,7 @@ from . import models
 # Register your models here.
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ('site_name', 'proxy_server_group', 'upstream', 'maintain_status')
+    list_display = ('site_name', 'site_status', 'proxy_server_group', 'upstream', 'maintain_status')
     filter_horizontal = ('real_server',)
     search_fields = ('site_name',)
 

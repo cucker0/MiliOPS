@@ -151,7 +151,7 @@ def GetProxyServerByGroup(req):
         data = json.loads(data)
         proxy_server_group_id = int(data['proxy_server_group_id'])
         proxy_server_group = models.ProxyServerGroup.objects.get(id=proxy_server_group_id)
-        sites = proxy_server_group.group_site.all()
+        sites = proxy_server_group.group_site.filter(site_status=1)
         # print(sites)
 
         html = ShowSiteList(sites, req)
