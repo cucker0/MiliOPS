@@ -7,7 +7,9 @@ from . import models
 class SiteAdmin(admin.ModelAdmin):
     list_display = ('site_name', 'site_status', 'proxy_server_group', 'upstream', 'maintain_status')
     filter_horizontal = ('real_server',)
+    raw_id_fields = ('upstream',)
     search_fields = ('site_name',)
+    fk_fields = ('upstream',)
 
 
 class ProxyServerGroupAdmin(admin.ModelAdmin):
@@ -45,6 +47,7 @@ class ConfigAdmin(admin.ModelAdmin):
 
 class UpstreamAdmin(admin.ModelAdmin):
     list_display = ('upstream_name','zone')
+    search_fields = ('upstream_name',)
 
 class ApplyTagAdmin(admin.ModelAdmin):
     list_display = ('tag', 'note',)
