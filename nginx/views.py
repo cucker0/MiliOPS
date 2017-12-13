@@ -625,9 +625,9 @@ def SearchSite(req):
     if req.method == "POST":
         data = req.POST.get('data')
         data = json.loads(data)
-        print(data)
+        # print(data)
         if data['search_key'].strip():
-            sites = models.Site.objects.filter(site_name__contains=data['search_key'].strip())
+            sites = models.Site.objects.filter( Q(site_name__icontains=data['search_key'].strip()) & Q(site_status=1))
         html = ShowSiteList(sites, req)
         return HttpResponse(json.dumps({'data':html}))
 
