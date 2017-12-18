@@ -22,9 +22,9 @@ class ProxyServerAdmin(admin.ModelAdmin):
 
 
 class RealServerAdmin(admin.ModelAdmin):
-    list_display = ('apply_name', 'host', 'port')
+    list_display = ('__str__', 'apply_name', 'host', 'port')
     search_fields = ('apply_name__tag',)        # 以__ 表示关联字段属性
-    raw_id_fields = ('host',)
+    raw_id_fields = ('host','apply_name',)
 
 class MaintainRealServerAdmin(admin.ModelAdmin):
     list_display = ('host', 'port')
