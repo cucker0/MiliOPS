@@ -393,21 +393,36 @@ class UpstreamOpration(object):
         :return:
         """
         config_obj = models.Config.objects.first()
-        if config_obj.upstream_up_realserver_test:  # 源站上线前是否测试
-            for rs in self.realservers:
-                # http://192.168.1.210:20022/do_not_delete/check.html
-                test_url = "http://%s:%s%s" %(self.GetHostIp(rs), rs.port, config_obj.upstream_up_realserver_testurl)
-                req = urllib.request.Request(test_url)
-                try:
-                    response = urllib.request.urlopen(req)
-                    response = response.read().decode('utf8')
-                except urllib.error.HTTPError as e:
-                    print(e.code)
-                    continue
+        # if config_obj.upstream_up_realserver_test:  # 源站上线前是否测试
+        #     for rs in self.realservers:
+        #         # http://192.168.1.210:20022/do_not_delete/check.html
+        #         test_url = "http://%s:%s%s" %(self.GetHostIp(rs), rs.port, config_obj.upstream_up_realserver_testurl)
+        #         req = urllib.request.Request(test_url)
+        #         try:
+        #             response = urllib.request.urlopen(req)
+        #             response = response.read().decode('utf8')
+        #         except urllib.error.HTTPError as e:
+        #             print(e.code)
+        #             continue
         for ps in self.proxy_servers:
             for rs in self.realservers:
-                a_url = "http://%s:%s/%s?upstream=%s&server=%s:%s&up=" %(self.GetHostIp(ps), self.proxy_server_group.port, self.proxy_server_group.dir, self.upstream.zone, self.GetHostIp(rs), rs.port)
-                x = self.opener.open(a_url)
+                test_url = "http://%s:%s/%s" %(self.GetHostIp(rs), rs.port, config_obj.upstream_up_realserver_testurl)
+                realserver_up_url = "http://%s:%s/%s?upstream=%s&server=%s:%s&up=" %(self.GetHostIp(ps), self.proxy_server_group.port, self.proxy_server_group.dir, self.upstream.zone, self.GetHostIp(rs), rs.port)
+                if config_obj.upstream_up_realserver_test:  # 源站上线前需要测试
+                    req = urllib.request.Request(test_url)
+                    try:
+                        reqobj = urllib.request.urlopen(req)
+                        http_status = reqobj.code
+                        response = reqobj.read().decode('utf8')
+                        if http_status == 200:
+                            call_realserver_up_api = self.opener.open(realserver_up_url)
+                    except urllib.error.HTTPError as e:
+                        print(e.code)
+                        continue
+
+                else:       # 源站上线前不需要测试
+                    call_realserver_up_api = self.opener.open(realserver_up_url)
+
         self.UpdateSiteRealserverStatusField()
 
     def UpstreamDown(self):
