@@ -51,6 +51,7 @@ class UpstreamAdmin(admin.ModelAdmin):
 
 class ApplyTagAdmin(admin.ModelAdmin):
     list_display = ('tag', 'note',)
+    search_fields = ('tag', 'note',)
 
 admin.site.register(models.Site, SiteAdmin)
 admin.site.register(models.ProxyServerGroup, ProxyServerGroupAdmin)
