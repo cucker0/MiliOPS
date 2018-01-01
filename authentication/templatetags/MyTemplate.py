@@ -5,6 +5,7 @@
 
 from django import template
 from django.utils.html import format_html
+import datetime
 
 register = template.Library()
 
@@ -23,3 +24,12 @@ def truncate_url(img_url):
         url = 'system/head_img_00.jpg'
     return url
 
+@register.simple_tag
+def get_year():
+    """
+    获取当年年份
+    :return: 当年年份
+    """
+    now = datetime.datetime.now()
+    YYYY = now.year
+    return YYYY
